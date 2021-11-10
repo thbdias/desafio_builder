@@ -7,6 +7,6 @@ FROM openjdk:11
 WORKDIR /app
 COPY --from=build /home/app/target/cliente.jar /app/cliente.jar
 
-EXPOSE 80
+EXPOSE 8090
 
 CMD java -jar cliente.jar

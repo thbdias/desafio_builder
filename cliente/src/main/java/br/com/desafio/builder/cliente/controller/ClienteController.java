@@ -19,6 +19,7 @@ public class ClienteController {
 	ClienteService clienteService;
 	
 
+	//adicionar validador de formato de data nascimento yyyy-MM-dd
 	@PostMapping("/cliente")
 	public ResponseEntity<Object> inserirCliente(@RequestBody ClienteDtoRequest clienteDtoRequest){
 		clienteService.inserirCliente(clienteDtoRequest);

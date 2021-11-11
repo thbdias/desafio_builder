@@ -27,7 +27,7 @@ public class ClienteEntity {
     @Column(name = "ID")
     private Integer id;
 	
-//	private LocalDate dataNascimento;
-	private Integer idade;
+	private LocalDate dataNascimento;
+	private Integer idade; //deve sair
 
 }

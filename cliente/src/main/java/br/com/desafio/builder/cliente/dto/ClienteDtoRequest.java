@@ -14,5 +14,5 @@ import lombok.ToString;
 public class ClienteDtoRequest {	
 	
 	private String idade;
-
+	private String dataNascimento; 
 }

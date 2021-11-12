@@ -34,12 +34,11 @@ public class ClienteController {
 	public ResponseEntity<Object> inserirCliente(@RequestBody ClienteDtoRequestInsert clienteDtoRequestInsert) {
 		try {
 			validarParams(clienteDtoRequestInsert);
-			clienteService.inserirCliente(clienteDtoRequestInsert);
+			return ResponseEntity.ok(clienteService.inserirCliente(clienteDtoRequestInsert));
 		} catch (ParamsException e) {
 			log.error(e.getMessage());
 			throw new ClienteException(clienteDtoRequestInsert, e.getMessage());
 		}		
-		return ResponseEntity.ok(CLIENTE_CRIADO.getMensagem());
 	}
 	
 	

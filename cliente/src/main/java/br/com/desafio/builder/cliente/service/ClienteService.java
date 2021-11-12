@@ -1,6 +1,7 @@
 package br.com.desafio.builder.cliente.service;
 
 import static br.com.desafio.builder.cliente.util.ClienteUtil.obterIdade;
+import static br.com.desafio.builder.cliente.util.Message.CLIENTE_CRIADO;
 import static br.com.desafio.builder.cliente.util.Message.CLIENTE_DELETADO;
 import static br.com.desafio.builder.cliente.util.Message.CLIENTE_INEXISTENTE;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_INSERIR_CLIENTE;
@@ -32,9 +33,14 @@ public class ClienteService {
 	@Autowired
 	ClienteAdapter clienteAdapter;
 	
-	public void inserirCliente(ClienteDtoRequestInsert clienteDtoRequestInsert) {
+	public ClienteDtoResponse inserirCliente(ClienteDtoRequestInsert clienteDtoRequestInsert) {
 		try {
-			clienteRepository.save(clienteAdapter.getClienteEntityFrom(clienteDtoRequestInsert));
+			ClienteEntity clienteSalvo = clienteRepository.save(clienteAdapter.getClienteEntityFrom(clienteDtoRequestInsert));			
+			ClienteDtoResponse clienteDtoResponse = clienteAdapter.getClienteDtoResponseFrom(clienteSalvo);
+			clienteDtoResponse.setMsg(CLIENTE_CRIADO.getMensagem());				
+			clienteDtoResponse.setIdade(obterIdade(clienteDtoResponse.getDataNascimento().toString()));			
+			return clienteDtoResponse;			
+			
 		} catch (AdapterException e) {
 			log.error(e.getMessage());
 			throw new ClienteException(clienteDtoRequestInsert, e.getMessage());

@@ -11,9 +11,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ClienteDtoRequest {	
+public class ClienteDtoResponse {	
 	
 	private String nome;	
 	private String dataNascimento; 
 	private Integer numeroRegistro;
+	private Integer idade;
+	private String msg;
 }

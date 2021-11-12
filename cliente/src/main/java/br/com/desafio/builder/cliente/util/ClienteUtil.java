@@ -1,14 +1,14 @@
 package br.com.desafio.builder.cliente.util;
 
 import static br.com.desafio.builder.cliente.util.Message.ERROR_FORMAT_DATA_NASCIMENTO;
-import static br.com.desafio.builder.cliente.util.Message.ERROR_PARAMS_CLIENTE;
+import static br.com.desafio.builder.cliente.util.Message.ERROR_PARAMS_CLIENTE_INSERT;
 import static java.lang.Integer.parseInt;
 import static java.time.LocalDate.now;
 import static java.time.LocalDate.parse;
 
 import java.time.Period;
 
-import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
+import br.com.desafio.builder.cliente.dto.ClienteDtoRequestInsert;
 import br.com.desafio.builder.cliente.exception.ParamsException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,14 +19,14 @@ public class ClienteUtil {
 	
 //	public static void validarParms(ClienteDtoRequest clienteDtoRequest, PageRequestDTO pageRequestDTO) {}
 	
-	public static void validarParams(ClienteDtoRequest clienteDtoRequest) throws ParamsException {
-		if (!isValid(clienteDtoRequest)) {
-			log.error(ERROR_PARAMS_CLIENTE.getMensagem() + " " + clienteDtoRequest.toString());
-			throw new ParamsException(clienteDtoRequest, ERROR_PARAMS_CLIENTE.getMensagem());
+	public static void validarParams(ClienteDtoRequestInsert clienteDtoRequestInsert) throws ParamsException {
+		if (!isValid(clienteDtoRequestInsert)) {
+			log.error(ERROR_PARAMS_CLIENTE_INSERT.getMensagem() + " " + clienteDtoRequestInsert.toString());
+			throw new ParamsException(clienteDtoRequestInsert, ERROR_PARAMS_CLIENTE_INSERT.getMensagem());
 		}
 	}
 	
-	private static boolean isValid(ClienteDtoRequest clienteDtoRequest) {
+	private static boolean isValid(ClienteDtoRequestInsert clienteDtoRequest) {
 		if ((clienteDtoRequest == null) ||			
 			(clienteDtoRequest.getNome() == null) || 
 			(clienteDtoRequest.getNome().isEmpty()) ||			

@@ -46,8 +46,7 @@ public class ClienteController {
 	@Transactional
 	@DeleteMapping("/cliente")	
 	public ResponseEntity<Object> deletarCliente(@RequestParam(required = true) Integer id){
-		clienteService.deletarCliente(id);
-		return ResponseEntity.ok(CLIENTE_DELETADO.getMensagem());
+		return ResponseEntity.ok(clienteService.deletarCliente(id));
 	}
 	
 	//TODO TEMP

@@ -9,6 +9,7 @@ public enum Message {
 	ERROR_FORMAT_DATA_NASCIMENTO("Erro no formato da data de nascimento; Obs: (data nascimento (yyyy-MM-dd)"),
 	ERROR_INSERIR_CLIENTE("Erro ao inserir cliente; ClienteDtoRequest = "),
 	ADAPTER_CLIENTE_ENTITY_FROM_DTO("Erro em ClienteAdapter.getClienteEntityFrom(); ClienteDtoRequest = "),
+	ADAPTER_CLIENTE_DTO_RESPONSE_FROM_ENTITY("Erro em ClienteAdapter.getClienteDtoResponseFrom(); ClienteEntity = "),
 	CLIENTE_CRIADO("Cliente criado com sucesso!"),
 	CLIENTE_INEXISTENTE("Não é possível excluir o cliente pois o mesmo não se encontra cadastrado!"),
 	CLIENTE_DELETADO("Cliente deletado com sucesso!");

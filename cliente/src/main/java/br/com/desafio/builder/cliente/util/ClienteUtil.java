@@ -1,7 +1,12 @@
 package br.com.desafio.builder.cliente.util;
 
+import static br.com.desafio.builder.cliente.util.Message.ERROR_FORMAT_DATA_NASCIMENTO;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_PARAMS_CLIENTE;
 import static java.lang.Integer.parseInt;
+import static java.time.LocalDate.now;
+import static java.time.LocalDate.parse;
+
+import java.time.Period;
 
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
 import br.com.desafio.builder.cliente.exception.ParamsException;
@@ -55,6 +60,16 @@ public class ClienteUtil {
 		}		 
 			
 		return true;
+	}
+	
+	
+	public static int obterIdade(String dataNascimento) throws ParamsException {
+		if (formatDataNascimentoValid(dataNascimento)) {
+			return Period.between(parse(dataNascimento), now()).getYears();
+		} else {
+			log.error(ERROR_FORMAT_DATA_NASCIMENTO.getMensagem());
+			throw new ParamsException(ERROR_FORMAT_DATA_NASCIMENTO.getMensagem());
+		}
 	}
 
 }

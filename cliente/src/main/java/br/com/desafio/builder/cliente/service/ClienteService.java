@@ -25,14 +25,14 @@ public class ClienteService {
 	
 	public void inserirCliente(ClienteDtoRequest clienteDtoRequest) {
 		try {
-			ClienteEntity clienteEntityFrom = clienteAdapter.getClienteEntityFrom(clienteDtoRequest);
-			clienteRepository.save(clienteEntityFrom);
+			clienteRepository.save(clienteAdapter.getClienteEntityFrom(clienteDtoRequest));
 		} catch (AdapterException e) {
 			log.error(e.getMessage());
 			throw new ClienteException(clienteDtoRequest, e.getMessage());
 		} catch (Exception error) {
 			log.error(error.getMessage());
-			throw new ClienteException(clienteDtoRequest, "Error: ["+ error.getMessage() +"] : " + ERROR_INSERIR_CLIENTE.getMensagem());
+			throw new ClienteException(clienteDtoRequest, 
+										"Error: ["+ error.getMessage() +"] : " + ERROR_INSERIR_CLIENTE.getMensagem());
 		}
 	}
 

@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString
 public class ClienteDtoRequest {	
 	
-	private String idade;
+	private String nome;	
 	private String dataNascimento; 
+	private Integer numeroRegistro;
 }

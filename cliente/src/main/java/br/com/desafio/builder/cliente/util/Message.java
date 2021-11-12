@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum Message {
 	
+	ERROR_PARAMS_CLIENTE("Erro ao inserir cliente; Obs: (nome e data nascimento (yyyy-MM-dd) são obrigatórios; ClienteDtoRequest = "),
 	ERROR_INSERIR_CLIENTE("Erro ao inserir cliente; ClienteDtoRequest = "),
 	ADAPTER_CLIENTE_ENTITY_FROM_DTO("Erro em ClienteAdapter.getClienteEntityFrom(); ClienteDtoRequest = ");
 	

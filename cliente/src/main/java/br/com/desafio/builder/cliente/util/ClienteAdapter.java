@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
 import br.com.desafio.builder.cliente.entity.ClienteEntity;
+import br.com.desafio.builder.cliente.exception.AdapterException;
 import br.com.desafio.builder.cliente.exception.ClienteException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,12 +19,12 @@ public class ClienteAdapter {
 	@Autowired
 	ModelMapper modelMapper;
 	
-	public ClienteEntity getClienteEntityFrom(ClienteDtoRequest clienteDtoRequest) {
+	public ClienteEntity getClienteEntityFrom(ClienteDtoRequest clienteDtoRequest) throws AdapterException {
 		try {
 			return modelMapper.map(clienteDtoRequest, ClienteEntity.class);
 		} catch (Exception error) {		
-			log.error(error.getMessage());
-			throw new ClienteException(clienteDtoRequest, ADAPTER_CLIENTE_ENTITY_FROM_DTO.getMensagem());
+			log.error(error.getMessage());			
+			throw new AdapterException(clienteDtoRequest, "Error: ["+ error.getMessage() +"] : " + ADAPTER_CLIENTE_ENTITY_FROM_DTO.getMensagem());
 		}
 	}
 

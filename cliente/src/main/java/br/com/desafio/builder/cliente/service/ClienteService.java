@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
+import br.com.desafio.builder.cliente.entity.ClienteEntity;
+import br.com.desafio.builder.cliente.exception.AdapterException;
 import br.com.desafio.builder.cliente.exception.ClienteException;
 import br.com.desafio.builder.cliente.repository.ClienteRepository;
 import br.com.desafio.builder.cliente.util.ClienteAdapter;
@@ -23,12 +25,15 @@ public class ClienteService {
 	
 	public void inserirCliente(ClienteDtoRequest clienteDtoRequest) {
 		try {
-			clienteRepository.save(clienteAdapter.getClienteEntityFrom(clienteDtoRequest));
+			ClienteEntity clienteEntityFrom = clienteAdapter.getClienteEntityFrom(clienteDtoRequest);
+			clienteRepository.save(clienteEntityFrom);
+		} catch (AdapterException e) {
+			log.error(e.getMessage());
+			throw new ClienteException(clienteDtoRequest, e.getMessage());
 		} catch (Exception error) {
 			log.error(error.getMessage());
-			throw new ClienteException(clienteDtoRequest, ERROR_INSERIR_CLIENTE.getMensagem());
+			throw new ClienteException(clienteDtoRequest, "Error: ["+ error.getMessage() +"] : " + ERROR_INSERIR_CLIENTE.getMensagem());
 		}
-		
 	}
 
 }

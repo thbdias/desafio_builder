@@ -1,5 +1,7 @@
 package br.com.desafio.builder.cliente.controller;
 
+import static br.com.desafio.builder.cliente.util.ClienteUtil.validarParams;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
+import br.com.desafio.builder.cliente.exception.ClienteException;
+import br.com.desafio.builder.cliente.exception.ParamsException;
 import br.com.desafio.builder.cliente.service.ClienteService;
+import br.com.desafio.builder.cliente.util.ClienteUtil;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping()
 public class ClienteController {
@@ -19,10 +26,15 @@ public class ClienteController {
 	ClienteService clienteService;
 	
 
-	//adicionar validador de formato de data nascimento yyyy-MM-dd
 	@PostMapping("/cliente")
-	public ResponseEntity<Object> inserirCliente(@RequestBody ClienteDtoRequest clienteDtoRequest){
-		clienteService.inserirCliente(clienteDtoRequest);
+	public ResponseEntity<Object> inserirCliente(@RequestBody ClienteDtoRequest clienteDtoRequest) {
+		try {
+			validarParams(clienteDtoRequest);
+			clienteService.inserirCliente(clienteDtoRequest);
+		} catch (ParamsException e) {
+			log.error(e.getMessage());
+			throw new ClienteException(clienteDtoRequest, e.getMessage());
+		}		
 		return ResponseEntity.ok("Hi");
 	}
 }

@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ClienteDtoRequest {	
+public class ClienteDtoRequestInsert {	
 	
 	private String nome;	
 	private String dataNascimento; 

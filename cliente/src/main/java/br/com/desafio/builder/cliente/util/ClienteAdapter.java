@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
+import br.com.desafio.builder.cliente.dto.ClienteDtoRequestInsert;
 import br.com.desafio.builder.cliente.entity.ClienteEntity;
 import br.com.desafio.builder.cliente.exception.AdapterException;
 import br.com.desafio.builder.cliente.exception.ClienteException;
@@ -19,7 +19,7 @@ public class ClienteAdapter {
 	@Autowired
 	ModelMapper modelMapper;
 	
-	public ClienteEntity getClienteEntityFrom(ClienteDtoRequest clienteDtoRequest) throws AdapterException {
+	public ClienteEntity getClienteEntityFrom(ClienteDtoRequestInsert clienteDtoRequest) throws AdapterException {
 		try {
 			return modelMapper.map(clienteDtoRequest, ClienteEntity.class);
 		} catch (Exception error) {		

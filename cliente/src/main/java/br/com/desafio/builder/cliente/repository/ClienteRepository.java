@@ -9,4 +9,5 @@ import br.com.desafio.builder.cliente.entity.ClienteEntity;
 @Repository
 public interface ClienteRepository  extends PagingAndSortingRepository<ClienteEntity, Integer>, JpaSpecificationExecutor<ClienteEntity>  {
 
+	void deleteById(Integer id);
 }

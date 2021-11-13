@@ -40,6 +40,9 @@ public class RepositoryUtil {
     		if (nonNull(filter.getNumeroRegistro()))
     			specification = specification.and(ClientSpecification.filterByNumeroRegistro(filter.getNumeroRegistro()));
     		
+    		if (nonNull(filter.getNome()))
+    			specification = specification.and(ClientSpecification.filterByNome(filter.getNome()));
+    		
     	}
     	
     	return specification;

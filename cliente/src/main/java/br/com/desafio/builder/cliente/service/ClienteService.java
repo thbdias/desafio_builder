@@ -1,8 +1,11 @@
 package br.com.desafio.builder.cliente.service;
 
+import static br.com.desafio.builder.cliente.util.Message.CLIENTE_ATUALIZADO;
 import static br.com.desafio.builder.cliente.util.Message.CLIENTE_CRIADO;
 import static br.com.desafio.builder.cliente.util.Message.CLIENTE_DELETADO;
 import static br.com.desafio.builder.cliente.util.Message.CLIENTE_INEXISTENTE;
+import static br.com.desafio.builder.cliente.util.Message.CLIENTE_INEXISTENTE_PARA_DELETAR;
+import static br.com.desafio.builder.cliente.util.Message.ERROR_ATUALIZAR_CLIENTE;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_INSERIR_CLIENTE;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_OBTER_CLIENTES;
 
@@ -71,13 +74,12 @@ public class ClienteService {
 			}	
 			
 		} else {
-			log.error(CLIENTE_INEXISTENTE.getMensagem());
-			throw new ClienteException(CLIENTE_INEXISTENTE.getMensagem());
+			log.error(CLIENTE_INEXISTENTE_PARA_DELETAR.getMensagem());
+			throw new ClienteException(CLIENTE_INEXISTENTE_PARA_DELETAR.getMensagem());
 		}		
 	}
 
 	public Page<ClienteDtoResponse> obterClientes(ClienteDtoRequest clienteDtoRequest, PageRequestDTO pageRequestDTO) {
-		
 		try {
 			var specification = RepositoryUtil.buildClienteSpecification(clienteDtoRequest);
 			var pageRequest = RepositoryUtil.getPageRequestFromPageDTO(pageRequestDTO);
@@ -95,6 +97,32 @@ public class ClienteService {
 			log.error(error.getMessage());
 			throw new ClienteException(ERROR_OBTER_CLIENTES.getMensagem());
 		}
+	}
+
+		
+	public ClienteDtoResponse atualizarCliente(ClienteDtoRequest clienteDtoRequest) {
+		Optional<ClienteEntity> clienteOptional = clienteRepository.findById(clienteDtoRequest.getId());
+		
+		if (clienteOptional.isPresent()) {			
+			try {
+				ClienteDtoResponse clienteDtoResponse = clienteAdapter.getClienteDtoResponseFrom(
+																		clienteRepository.save(
+																				clienteAdapter.getClienteEntityFrom(clienteDtoRequest)));
+				clienteDtoResponse.setMsg(CLIENTE_ATUALIZADO.getMensagem());
+				return clienteDtoResponse;
+				
+			} catch (AdapterException e) {
+				log.error(e.getMessage());
+				throw new ClienteException(clienteDtoRequest, e.getMessage());
+			} catch (Exception error) {
+				log.error(error.getMessage());
+				throw new ClienteException(clienteDtoRequest, 
+											"Error: ["+ error.getMessage() +"] : " + ERROR_ATUALIZAR_CLIENTE.getMensagem());
+			}
+		} else {
+			log.error(CLIENTE_INEXISTENTE.getMensagem());
+			throw new ClienteException(CLIENTE_INEXISTENTE.getMensagem());
+		}	
 	}
 
 }

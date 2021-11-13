@@ -3,8 +3,6 @@ package br.com.desafio.builder.cliente.util;
 
 import static java.util.Objects.nonNull;
 
-import java.util.Objects;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -40,8 +38,12 @@ public class RepositoryUtil {
     		if (nonNull(filter.getNumeroRegistro()))
     			specification = specification.and(ClientSpecification.filterByNumeroRegistro(filter.getNumeroRegistro()));
     		
+    		if (nonNull(filter.getNome()))
+    			specification = specification.and(ClientSpecification.filterByNome(filter.getNome()));
+    		
+    		if (nonNull(filter.getDataNascimento()))
+    			specification = specification.and(ClientSpecification.filterByDataNascimento(filter.getDataNascimento()));
     	}
-    	
     	return specification;
     }
 }

@@ -34,9 +34,12 @@ public class RepositoryUtil {
     	var specification = Specification.where(ClientSpecification.findAll());
     	
     	if (nonNull(filter)) {
-    		if (nonNull(filter.getId())) {
+    		if (nonNull(filter.getId())) 
     			specification = specification.and(ClientSpecification.filterById(filter.getId()));
-    		}
+    		
+    		if (nonNull(filter.getNumeroRegistro()))
+    			specification = specification.and(ClientSpecification.filterByNumeroRegistro(filter.getNumeroRegistro()));
+    		
     	}
     	
     	return specification;

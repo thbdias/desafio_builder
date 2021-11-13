@@ -25,6 +25,10 @@ public class ClientSpecification {
     	return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("id"), id);        
     }
 
+	public static Specification<ClienteEntity> filterByNumeroRegistro(Integer numeroRegistro) {
+		return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("numeroRegistro"), numeroRegistro);
+	}
+
 //    public static Specification<Credit> filterByCampaign(List<String> nameCampaign) {
 //        return (root, criteriaQuery, criteriaBuilder) -> root.join("campaign").get("name").in(nameCampaign);
 //    }

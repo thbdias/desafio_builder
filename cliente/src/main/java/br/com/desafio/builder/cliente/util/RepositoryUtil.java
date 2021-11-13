@@ -43,9 +43,7 @@ public class RepositoryUtil {
     		
     		if (nonNull(filter.getDataNascimento()))
     			specification = specification.and(ClientSpecification.filterByDataNascimento(filter.getDataNascimento()));
-    		
     	}
-    	
     	return specification;
     }
 }

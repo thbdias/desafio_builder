@@ -77,7 +77,6 @@ public class ClienteService {
 	}
 
 	public Page<ClienteDtoResponse> obterClientes(ClienteDtoRequest clienteDtoRequest, PageRequestDTO pageRequestDTO) {
-		
 		try {
 			var specification = RepositoryUtil.buildClienteSpecification(clienteDtoRequest);
 			var pageRequest = RepositoryUtil.getPageRequestFromPageDTO(pageRequestDTO);

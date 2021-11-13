@@ -1,5 +1,6 @@
 package br.com.desafio.builder.cliente.controller;
 
+import static br.com.desafio.builder.cliente.util.ClienteUtil.validarOrderByAndSort;
 import static br.com.desafio.builder.cliente.util.ClienteUtil.validarParamDataNascimento;
 import static br.com.desafio.builder.cliente.util.ClienteUtil.validarParamId;
 import static br.com.desafio.builder.cliente.util.ClienteUtil.validarParams;
@@ -57,10 +58,11 @@ public class ClienteController {
 	public ResponseEntity<Object> obterClientes(ClienteDtoRequest clienteDtoRequest, PageRequestDTO pageRequestDTO) {
 		try {
 			validarParamDataNascimento(clienteDtoRequest);
+			validarOrderByAndSort(pageRequestDTO);
 			return ResponseEntity.ok(clienteService.obterClientes(clienteDtoRequest, pageRequestDTO));
 		} catch (ParamsException e) {
 			log.error(e.getMessage());
-			throw new ClienteException(clienteDtoRequest, e.getMessage());
+			throw new ClienteException(e.getMessage());
 		}
 	}
 	

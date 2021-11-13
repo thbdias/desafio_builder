@@ -14,4 +14,6 @@ import lombok.ToString;
 public class PageRequestDTO {
     private Integer page;
     private Integer size;
+    private String orderBy;
+    private String sort;
 }

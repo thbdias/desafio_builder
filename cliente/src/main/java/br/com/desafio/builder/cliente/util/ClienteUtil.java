@@ -1,9 +1,12 @@
 package br.com.desafio.builder.cliente.util;
 
 import static br.com.desafio.builder.cliente.util.Message.ERROR_FORMAT_DATA_NASCIMENTO;
+import static br.com.desafio.builder.cliente.util.Message.ERROR_ORDER_BY;
+import static br.com.desafio.builder.cliente.util.Message.ERROR_ORDER_BY_E_SORT;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_PARAMS_CLIENTE_DATA_NASCIMENTO;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_PARAMS_CLIENTE_ID;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_PARAMS_CLIENTE_INSERT;
+import static br.com.desafio.builder.cliente.util.Message.ERROR_SORT;
 import static java.lang.Integer.parseInt;
 import static java.time.LocalDate.now;
 import static java.time.LocalDate.parse;
@@ -14,6 +17,7 @@ import java.time.Period;
 
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequestInsert;
+import br.com.desafio.builder.cliente.dto.PageRequestDTO;
 import br.com.desafio.builder.cliente.exception.ParamsException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +26,45 @@ public class ClienteUtil {
 	
 	private final static int TAMANHO_DATA_NASCIMENTO = 10; 
 	
+	
+	public static void validarOrderByAndSort(PageRequestDTO pageRequestDTO) throws ParamsException {
+		if (nonNull(pageRequestDTO)) {
+			if (existeSort(pageRequestDTO)) {
+				if (!pageRequestDTO.getSort().equals("asc") && !pageRequestDTO.getSort().equals("desc")) {
+					log.error(ERROR_SORT.getMensagem());
+					throw new ParamsException(pageRequestDTO.getSort(), ERROR_SORT.getMensagem());
+				}				
+			}
+			
+			if (existeOrderBy(pageRequestDTO)) {
+				if (!pageRequestDTO.getOrderBy().equals("id") && 
+						!pageRequestDTO.getOrderBy().equals("nome") &&
+						!pageRequestDTO.getOrderBy().equals("dataNascimento") &&
+						!pageRequestDTO.getOrderBy().equals("numeroRegistro")) {
+					log.error(ERROR_ORDER_BY.getMensagem());
+					throw new ParamsException(pageRequestDTO.getOrderBy(), ERROR_ORDER_BY.getMensagem());
+				}				
+			}	
+			
+			if ( (existeSort(pageRequestDTO) && !existeOrderBy(pageRequestDTO)) ||
+					(!existeSort(pageRequestDTO) && existeOrderBy(pageRequestDTO))
+				){
+				log.error(ERROR_ORDER_BY_E_SORT.getMensagem());
+				throw new ParamsException(ERROR_ORDER_BY_E_SORT.getMensagem());
+			}			
+		}
+	}
+
+
+	private static boolean existeOrderBy(PageRequestDTO pageRequestDTO) {
+		return nonNull(pageRequestDTO.getOrderBy()) && !pageRequestDTO.getOrderBy().isBlank();
+	}
+
+
+	private static boolean existeSort(PageRequestDTO pageRequestDTO) {
+		return nonNull(pageRequestDTO.getSort()) && !pageRequestDTO.getSort().isBlank();
+	}	
+
 	
 	public static void validarParamId(ClienteDtoRequest clienteDtoRequest) throws ParamsException {		    
 		if (isNull(clienteDtoRequest) || isNull(clienteDtoRequest.getId()) || clienteDtoRequest.getId() <= 0 ) {
@@ -93,6 +136,6 @@ public class ClienteUtil {
 			log.error(ERROR_FORMAT_DATA_NASCIMENTO.getMensagem());
 			throw new ParamsException(ERROR_FORMAT_DATA_NASCIMENTO.getMensagem());
 		}
-	}	
+	}
 
 }

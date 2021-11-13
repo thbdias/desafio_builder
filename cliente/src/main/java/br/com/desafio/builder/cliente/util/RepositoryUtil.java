@@ -5,6 +5,7 @@ import static java.util.Objects.nonNull;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.domain.Sort;
 
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
 import br.com.desafio.builder.cliente.dto.PageRequestDTO;
@@ -14,14 +15,20 @@ public class RepositoryUtil {
 	
 	public static final int DEFAULT_SIZE_PAGE_REQUEST = 10;
 
-	//TODO
-	//add ORDENAÇÃO
+	
     public static PageRequest getPageRequestFromPageDTO(PageRequestDTO pageRequestDTO) {    	
-        int page = (nonNull(pageRequestDTO) && nonNull(pageRequestDTO.getPage())) 
-        				? pageRequestDTO.getPage() : 0;
+        int page = (nonNull(pageRequestDTO) && nonNull(pageRequestDTO.getPage())) ? pageRequestDTO.getPage() : 0;
+        int size = (nonNull(pageRequestDTO) && nonNull(pageRequestDTO.getSize())) ? pageRequestDTO.getSize() : DEFAULT_SIZE_PAGE_REQUEST;
         
-        int size = (nonNull(pageRequestDTO) && nonNull(pageRequestDTO.getSize())) 
-        				? pageRequestDTO.getSize() : DEFAULT_SIZE_PAGE_REQUEST;
+        if(pageRequestDTO.getSort() != null && pageRequestDTO.getOrderBy() != null) {
+        	
+        	 if(getSortDirection(pageRequestDTO.getSort()).isDescending()) {
+        		 return PageRequest.of(page, size, Sort.by(Sort.Order.desc(pageRequestDTO.getOrderBy())));
+        	 } else {
+        		 return PageRequest.of(page, size, Sort.by(Sort.Order.asc(pageRequestDTO.getOrderBy())));
+        	 }
+        	
+        }
         
         return PageRequest.of(page, size);
     }
@@ -45,5 +52,14 @@ public class RepositoryUtil {
     			specification = specification.and(ClientSpecification.filterByDataNascimento(filter.getDataNascimento()));
     	}
     	return specification;
+    }
+    
+    
+    private static Sort.Direction getSortDirection(String sort) {
+        if("desc".equalsIgnoreCase(sort)) {
+            return Sort.Direction.DESC;
+        } else {
+            return Sort.Direction.ASC;
+        }
     }
 }

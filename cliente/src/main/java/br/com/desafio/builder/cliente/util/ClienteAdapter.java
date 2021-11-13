@@ -16,6 +16,8 @@ import br.com.desafio.builder.cliente.dto.ClienteDtoRequestInsert;
 import br.com.desafio.builder.cliente.dto.ClienteDtoResponse;
 import br.com.desafio.builder.cliente.entity.ClienteEntity;
 import br.com.desafio.builder.cliente.exception.AdapterException;
+import br.com.desafio.builder.cliente.exception.ClienteException;
+import br.com.desafio.builder.cliente.exception.ParamsException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -57,14 +59,21 @@ public class ClienteAdapter {
 
 	public List<ClienteDtoResponse> getListClienteDtoFrom(List<ClienteEntity> listClienteEntity) {		
 		if (nonNull(listClienteEntity)) {		
-			List<ClienteDtoResponse> listaClienteDtoResponse = new ArrayList<>();
-			
-			listClienteEntity
-				.stream()
-					.forEach(entity -> listaClienteDtoResponse.add(
-											modelMapper.map(entity, ClienteDtoResponse.class)));
-			
-			return listaClienteDtoResponse;
+			try {
+				
+				List<ClienteDtoResponse> listaClienteDtoResponse = new ArrayList<>();
+				
+				for (ClienteEntity clienteEntity: listClienteEntity) {
+					ClienteDtoResponse clienteDtoResponse = modelMapper.map(clienteEntity, ClienteDtoResponse.class);					
+					clienteDtoResponse.setIdade(obterIdade(clienteDtoResponse.getDataNascimento().toString()));
+					listaClienteDtoResponse.add(clienteDtoResponse);
+				}
+				return listaClienteDtoResponse;
+				
+			} catch (ParamsException e) {				
+				log.error(e.getMessage());
+				throw new ClienteException(e.getMessage());				
+			}
 		}
 		return new ArrayList<>();
 	}

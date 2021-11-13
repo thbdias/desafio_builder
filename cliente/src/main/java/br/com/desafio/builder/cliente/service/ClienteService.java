@@ -84,8 +84,7 @@ public class ClienteService {
 			
 			var clientesPage = clienteRepository.findAll(specification, pageRequest);
 			
-			var listClienteDtoResponse = clienteAdapter
-											.getListClienteDtoFrom(clientesPage);
+			var listClienteDtoResponse = clienteAdapter.getListClienteDtoFrom(clientesPage);
 			
 			return new PageImpl<>(
 							listClienteDtoResponse, 

@@ -2,8 +2,6 @@ package br.com.desafio.builder.cliente.util;
 
 import static java.time.LocalDate.parse;
 
-import java.time.LocalDate;
-
 import org.springframework.data.jpa.domain.Specification;
 
 import br.com.desafio.builder.cliente.entity.ClienteEntity;

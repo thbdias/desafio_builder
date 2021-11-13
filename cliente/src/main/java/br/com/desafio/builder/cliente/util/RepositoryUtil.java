@@ -3,8 +3,6 @@ package br.com.desafio.builder.cliente.util;
 
 import static java.util.Objects.nonNull;
 
-import java.util.Objects;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 

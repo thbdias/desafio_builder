@@ -1,5 +1,9 @@
 package br.com.desafio.builder.cliente.util;
 
+import static java.time.LocalDate.parse;
+
+import java.time.LocalDate;
+
 import org.springframework.data.jpa.domain.Specification;
 
 import br.com.desafio.builder.cliente.entity.ClienteEntity;
@@ -31,6 +35,10 @@ public class ClientSpecification {
 
 	public static Specification<ClienteEntity> filterByNome(String nome) {
 		return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("nome"), String.join("", "%", nome, "%"));
+	}
+
+	public static Specification<ClienteEntity> filterByDataNascimento(String dataNascimento) {
+		return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("dataNascimento"), parse(dataNascimento));
 	}
 
 //    public static Specification<Credit> filterByCampaign(List<String> nameCampaign) {

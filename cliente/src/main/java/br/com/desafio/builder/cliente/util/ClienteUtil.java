@@ -1,10 +1,12 @@
 package br.com.desafio.builder.cliente.util;
 
 import static br.com.desafio.builder.cliente.util.Message.ERROR_FORMAT_DATA_NASCIMENTO;
+import static br.com.desafio.builder.cliente.util.Message.ERROR_PARAMS_CLIENTE_DATA_NASCIMENTO;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_PARAMS_CLIENTE_INSERT;
 import static java.lang.Integer.parseInt;
 import static java.time.LocalDate.now;
 import static java.time.LocalDate.parse;
+import static java.util.Objects.nonNull;
 
 import java.time.Period;
 
@@ -17,6 +19,16 @@ public class ClienteUtil {
 	
 	private final static int TAMANHO_DATA_NASCIMENTO = 10; 
 	
+	
+	public static void validarParamDataNascimento(String dataNascimento) throws ParamsException {
+		if (nonNull(dataNascimento)) {
+			if (!formatDataNascimentoValid(dataNascimento)) {
+				log.error(ERROR_PARAMS_CLIENTE_DATA_NASCIMENTO.getMensagem());
+				throw new ParamsException(dataNascimento, ERROR_PARAMS_CLIENTE_DATA_NASCIMENTO.getMensagem());
+			}
+		}
+	}
+
 
 	public static void validarParams(ClienteDtoRequestInsert clienteDtoRequestInsert) throws ParamsException {
 		if (!isValid(clienteDtoRequestInsert)) {

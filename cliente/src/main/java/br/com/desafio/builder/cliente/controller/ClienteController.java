@@ -1,5 +1,6 @@
 package br.com.desafio.builder.cliente.controller;
 
+import static br.com.desafio.builder.cliente.util.ClienteUtil.validarParamDataNascimento;
 import static br.com.desafio.builder.cliente.util.ClienteUtil.validarParams;
 
 import javax.transaction.Transactional;
@@ -52,6 +53,12 @@ public class ClienteController {
 	
 	@GetMapping("/clientes")
 	public ResponseEntity<Object> obterClientes(ClienteDtoRequest clienteDtoRequest, PageRequestDTO pageRequestDTO) {
-		return ResponseEntity.ok(clienteService.obterClientes(clienteDtoRequest, pageRequestDTO));
+		try {
+			validarParamDataNascimento(clienteDtoRequest.getDataNascimento());
+			return ResponseEntity.ok(clienteService.obterClientes(clienteDtoRequest, pageRequestDTO));
+		} catch (ParamsException e) {
+			log.error(e.getMessage());
+			throw new ClienteException(clienteDtoRequest, e.getMessage());
+		}
 	}
 }

@@ -17,14 +17,14 @@ public class ClienteUtil {
 	
 	private final static int TAMANHO_DATA_NASCIMENTO = 10; 
 	
-//	public static void validarParms(ClienteDtoRequest clienteDtoRequest, PageRequestDTO pageRequestDTO) {}
-	
+
 	public static void validarParams(ClienteDtoRequestInsert clienteDtoRequestInsert) throws ParamsException {
 		if (!isValid(clienteDtoRequestInsert)) {
 			log.error(ERROR_PARAMS_CLIENTE_INSERT.getMensagem() + " " + clienteDtoRequestInsert.toString());
 			throw new ParamsException(clienteDtoRequestInsert, ERROR_PARAMS_CLIENTE_INSERT.getMensagem());
 		}
 	}
+	
 	
 	private static boolean isValid(ClienteDtoRequestInsert clienteDtoRequest) {
 		if ((clienteDtoRequest == null) ||			

@@ -2,10 +2,12 @@ package br.com.desafio.builder.cliente.util;
 
 import static br.com.desafio.builder.cliente.util.Message.ERROR_FORMAT_DATA_NASCIMENTO;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_PARAMS_CLIENTE_DATA_NASCIMENTO;
+import static br.com.desafio.builder.cliente.util.Message.ERROR_PARAMS_CLIENTE_ID;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_PARAMS_CLIENTE_INSERT;
 import static java.lang.Integer.parseInt;
 import static java.time.LocalDate.now;
 import static java.time.LocalDate.parse;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 import java.time.Period;
@@ -19,6 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ClienteUtil {
 	
 	private final static int TAMANHO_DATA_NASCIMENTO = 10; 
+	
+	
+	public static void validarParamId(ClienteDtoRequest clienteDtoRequest) throws ParamsException {		    
+		if (isNull(clienteDtoRequest) || isNull(clienteDtoRequest.getId()) || clienteDtoRequest.getId() <= 0 ) {
+			log.error(ERROR_PARAMS_CLIENTE_ID.getMensagem());
+			throw new ParamsException(clienteDtoRequest.getId(), ERROR_PARAMS_CLIENTE_ID.getMensagem());
+		}
+	}
 	
 	
 	public static void validarParamDataNascimento(ClienteDtoRequest clienteDtoRequest) throws ParamsException {		
@@ -83,6 +93,6 @@ public class ClienteUtil {
 			log.error(ERROR_FORMAT_DATA_NASCIMENTO.getMensagem());
 			throw new ParamsException(ERROR_FORMAT_DATA_NASCIMENTO.getMensagem());
 		}
-	}
+	}	
 
 }

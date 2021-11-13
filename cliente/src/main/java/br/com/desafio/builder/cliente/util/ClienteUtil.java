@@ -10,6 +10,7 @@ import static java.util.Objects.nonNull;
 
 import java.time.Period;
 
+import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequestInsert;
 import br.com.desafio.builder.cliente.exception.ParamsException;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +21,11 @@ public class ClienteUtil {
 	private final static int TAMANHO_DATA_NASCIMENTO = 10; 
 	
 	
-	public static void validarParamDataNascimento(String dataNascimento) throws ParamsException {
-		if (nonNull(dataNascimento)) {
-			if (!formatDataNascimentoValid(dataNascimento)) {
+	public static void validarParamDataNascimento(ClienteDtoRequest clienteDtoRequest) throws ParamsException {		
+		if (nonNull(clienteDtoRequest) && nonNull(clienteDtoRequest.getDataNascimento())) {
+			if (!formatDataNascimentoValid(clienteDtoRequest.getDataNascimento())) {
 				log.error(ERROR_PARAMS_CLIENTE_DATA_NASCIMENTO.getMensagem());
-				throw new ParamsException(dataNascimento, ERROR_PARAMS_CLIENTE_DATA_NASCIMENTO.getMensagem());
+				throw new ParamsException(clienteDtoRequest.getDataNascimento(), ERROR_PARAMS_CLIENTE_DATA_NASCIMENTO.getMensagem());
 			}
 		}
 	}

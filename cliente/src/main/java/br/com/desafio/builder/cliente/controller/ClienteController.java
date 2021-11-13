@@ -54,11 +54,23 @@ public class ClienteController {
 	@GetMapping("/clientes")
 	public ResponseEntity<Object> obterClientes(ClienteDtoRequest clienteDtoRequest, PageRequestDTO pageRequestDTO) {
 		try {
-			validarParamDataNascimento(clienteDtoRequest.getDataNascimento());
+			validarParamDataNascimento(clienteDtoRequest);
 			return ResponseEntity.ok(clienteService.obterClientes(clienteDtoRequest, pageRequestDTO));
 		} catch (ParamsException e) {
 			log.error(e.getMessage());
 			throw new ClienteException(clienteDtoRequest, e.getMessage());
 		}
 	}
+	
+	
+//	@GetMapping("/clientes")
+//	public ResponseEntity<Object> atuaizarCliente(ClienteDtoRequest clienteDtoRequest) {
+//		try {
+//			validarParamId(clienteDtoRequest.getId());
+//			return ResponseEntity.ok(clienteService.obterClientes(clienteDtoRequest, pageRequestDTO));
+//		} catch (ParamsException e) {
+//			log.error(e.getMessage());
+//			throw new ClienteException(clienteDtoRequest, e.getMessage());
+//		}
+//	}
 }

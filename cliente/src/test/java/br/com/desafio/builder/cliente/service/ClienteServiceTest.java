@@ -7,9 +7,9 @@ import static br.com.desafio.builder.cliente.util.Message.CLIENTE_INEXISTENTE;
 import static br.com.desafio.builder.cliente.util.Message.CLIENTE_INEXISTENTE_PARA_DELETAR;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_ATUALIZAR_CLIENTE;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_INSERIR_CLIENTE;
+import static br.com.desafio.builder.cliente.util.Message.ERROR_OBTER_CLIENTES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static util.ClienteTesteUtil.getClienteDtoRequestInsertMock;
 import static util.ClienteTesteUtil.getClienteDtoRequestMock;
@@ -17,6 +17,8 @@ import static util.ClienteTesteUtil.getClienteDtoResponseSemMsgMock;
 import static util.ClienteTesteUtil.getClienteEntityFullMock;
 import static util.ClienteTesteUtil.getClienteEntityMock;
 import static util.ClienteTesteUtil.getOptionalClienteEntityMock;
+import static util.ClienteTesteUtil.getPageRequestMock;
+import static util.ClienteTesteUtil.getSpecificationFindAllMock;
 
 import java.util.Optional;
 
@@ -24,10 +26,8 @@ import javax.persistence.PersistenceException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
@@ -37,8 +37,6 @@ import br.com.desafio.builder.cliente.entity.ClienteEntity;
 import br.com.desafio.builder.cliente.exception.AdapterException;
 import br.com.desafio.builder.cliente.repository.ClienteRepository;
 import br.com.desafio.builder.cliente.util.ClienteAdapter;
-import br.com.desafio.builder.cliente.util.Message;
-import util.ClienteTesteUtil;
 
 public class ClienteServiceTest {
 
@@ -222,7 +220,17 @@ public class ClienteServiceTest {
 	}
 	
 	
-	
-	
+	@Test
+	public void testeExceptionObterClientes() {
+		when(clienteRepositoryMock.findAll(getSpecificationFindAllMock(), getPageRequestMock()))
+			.thenThrow(new PersistenceException(ERROR_OBTER_CLIENTES.getMensagem()));
+		
+		try {
+			clienteService.obterClientes(null, null);
+			fail("Deveria ter lancado uma excecao");
+		} catch (Exception e) {
+			assertThat(e.getMessage()).contains(ERROR_OBTER_CLIENTES.getMensagem());
+		}
+	}
 	
 }

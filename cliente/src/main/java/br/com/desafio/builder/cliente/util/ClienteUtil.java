@@ -69,7 +69,7 @@ public class ClienteUtil {
 	public static void validarParamId(ClienteDtoRequest clienteDtoRequest) throws ParamsException {		    
 		if (isNull(clienteDtoRequest) || isNull(clienteDtoRequest.getId()) || clienteDtoRequest.getId() <= 0 ) {
 			log.error(ERROR_PARAMS_CLIENTE_ID.getMensagem());
-			throw new ParamsException(clienteDtoRequest.getId(), ERROR_PARAMS_CLIENTE_ID.getMensagem());
+			throw new ParamsException(clienteDtoRequest, ERROR_PARAMS_CLIENTE_ID.getMensagem());
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class ClienteUtil {
 		if (nonNull(clienteDtoRequest) && nonNull(clienteDtoRequest.getDataNascimento())) {
 			if (!formatDataNascimentoValid(clienteDtoRequest.getDataNascimento())) {
 				log.error(ERROR_PARAMS_CLIENTE_DATA_NASCIMENTO.getMensagem());
-				throw new ParamsException(clienteDtoRequest.getDataNascimento(), ERROR_PARAMS_CLIENTE_DATA_NASCIMENTO.getMensagem());
+				throw new ParamsException(ERROR_PARAMS_CLIENTE_DATA_NASCIMENTO.getMensagem());
 			}
 		}
 	}
@@ -86,7 +86,7 @@ public class ClienteUtil {
 
 	public static void validarParams(ClienteDtoRequestInsert clienteDtoRequestInsert) throws ParamsException {
 		if (!isValid(clienteDtoRequestInsert)) {
-			log.error(ERROR_PARAMS_CLIENTE_INSERT.getMensagem() + " " + clienteDtoRequestInsert.toString());
+			log.error(ERROR_PARAMS_CLIENTE_INSERT.getMensagem() + " " + clienteDtoRequestInsert);
 			throw new ParamsException(clienteDtoRequestInsert, ERROR_PARAMS_CLIENTE_INSERT.getMensagem());
 		}
 	}

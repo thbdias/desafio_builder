@@ -144,4 +144,54 @@ public class ClienteTesteUtil {
 		clienteDtoRequest.setDataNascimento("2010-02-05");
 		return clienteDtoRequest;
 	}
+	
+	public static ClienteDtoRequestInsert getClienteDtoRequestInsertNull() {
+		return null;
+	}
+	
+	public static ClienteDtoRequestInsert getClienteDtoRequestInsertComNomeNull() {
+		return ClienteDtoRequestInsert
+				.builder()
+					.nome(null)
+				.build();
+	}
+	
+	public static ClienteDtoRequestInsert getClienteDtoRequestInsertComNomeEmpty() {
+		return ClienteDtoRequestInsert
+				.builder()
+					.nome("")
+				.build();
+	}
+	
+	public static ClienteDtoRequestInsert getClienteDtoRequestInsertComDataNull() {
+		return ClienteDtoRequestInsert
+				.builder()
+					.nome("abc")
+					.dataNascimento(null)
+				.build();
+	}
+	
+	public static ClienteDtoRequestInsert getClienteDtoRequestInsertComDataEmpty() {
+		return ClienteDtoRequestInsert
+				.builder()
+					.nome("abc")
+					.dataNascimento("")
+				.build();
+	}
+	
+	public static ClienteDtoRequestInsert getClienteDtoRequestInsertComDataInvalida() {
+		return ClienteDtoRequestInsert
+				.builder()
+					.nome("abc")
+					.dataNascimento("2010/04-05")
+				.build();
+	}
+	
+	public static ClienteDtoRequestInsert getClienteDtoRequestInsertComData() {
+		return ClienteDtoRequestInsert
+				.builder()
+					.nome("abc")
+					.dataNascimento("2010-04-05")
+				.build();
+	}
 }

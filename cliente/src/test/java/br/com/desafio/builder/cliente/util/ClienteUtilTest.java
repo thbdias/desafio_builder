@@ -9,17 +9,22 @@ import static util.ClienteTesteUtil.getClienteDtoRequestComDataInvalida4;
 import static util.ClienteTesteUtil.getClienteDtoRequestComDataValida;
 import static util.ClienteTesteUtil.getClienteDtoRequestComIdNegativoMock;
 import static util.ClienteTesteUtil.getClienteDtoRequestComIdNullMock;
+import static util.ClienteTesteUtil.getClienteDtoRequestInsertComData;
+import static util.ClienteTesteUtil.getClienteDtoRequestInsertComDataEmpty;
+import static util.ClienteTesteUtil.getClienteDtoRequestInsertComDataInvalida;
+import static util.ClienteTesteUtil.getClienteDtoRequestInsertComDataNull;
+import static util.ClienteTesteUtil.getClienteDtoRequestInsertComNomeEmpty;
+import static util.ClienteTesteUtil.getClienteDtoRequestInsertComNomeNull;
+import static util.ClienteTesteUtil.getClienteDtoRequestInsertNull;
 import static util.ClienteTesteUtil.getClienteDtoRequestNullMock;
 import static util.ClienteTesteUtil.getPageRequestDTOErroOrderByMock;
 import static util.ClienteTesteUtil.getPageRequestDTOErroSortIncompativel2Mock;
 import static util.ClienteTesteUtil.getPageRequestDTOErroSortIncompativelMock;
 import static util.ClienteTesteUtil.getPageRequestDTOErroSortMock;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import br.com.desafio.builder.cliente.exception.ParamsException;
-import util.ClienteTesteUtil;
 
 public class ClienteUtilTest {
 	
@@ -95,7 +100,6 @@ public class ClienteUtilTest {
 	
 	@Test
 	public void testeValidarParamDataNascimentoComClienteDtoRequestNull() throws ParamsException {
-		String msgEsperada = "Erro no formato da data de nascimento (yyyy-MM-dd)!";
 		ClienteUtil.validarParamDataNascimento(getClienteDtoRequestNullMock());
 	}
 	
@@ -147,4 +151,84 @@ public class ClienteUtilTest {
 			fail("Não Deve lançar uma excecao");
 		}
 	}
+	
+	@Test
+	public void testeValidarParamsComClienteDtoRequestInsertNull() {
+		String msgEsperada = "Erro ao inserir cliente; Obs: (nome e data nascimento (yyyy-MM-dd) são obrigatórios";
+		try {
+			ClienteUtil.validarParams(getClienteDtoRequestInsertNull());
+		} catch (ParamsException e) {
+			assertThat(e.getMessage()).contains(msgEsperada);
+		}
+	}
+	
+	@Test
+	public void testeValidarParamsComClienteDtoRequestInsertComNomeNull() {
+		String msgEsperada = "Erro ao inserir cliente; Obs: (nome e data nascimento (yyyy-MM-dd) são obrigatórios";
+		try {
+			ClienteUtil.validarParams(getClienteDtoRequestInsertComNomeNull());
+		} catch (ParamsException e) {
+			assertThat(e.getMessage()).contains(msgEsperada);
+		}
+	}
+	
+	@Test
+	public void testeValidarParamsComClienteDtoRequestInsertComNomeEmpty() {
+		String msgEsperada = "Erro ao inserir cliente; Obs: (nome e data nascimento (yyyy-MM-dd) são obrigatórios";
+		try {
+			ClienteUtil.validarParams(getClienteDtoRequestInsertComNomeEmpty());
+		} catch (ParamsException e) {
+			assertThat(e.getMessage()).contains(msgEsperada);
+		}
+	}
+	
+	@Test
+	public void testeValidarParamsComClienteDtoRequestInsertComDataNull() {
+		String msgEsperada = "Erro ao inserir cliente; Obs: (nome e data nascimento (yyyy-MM-dd) são obrigatórios";
+		try {
+			ClienteUtil.validarParams(getClienteDtoRequestInsertComDataNull());
+		} catch (ParamsException e) {
+			assertThat(e.getMessage()).contains(msgEsperada);
+		}
+	}
+	
+	@Test
+	public void testeValidarParamsComClienteDtoRequestInsertComDataEmpty() {
+		String msgEsperada = "Erro ao inserir cliente; Obs: (nome e data nascimento (yyyy-MM-dd) são obrigatórios";
+		try {
+			ClienteUtil.validarParams(getClienteDtoRequestInsertComDataEmpty());
+		} catch (ParamsException e) {
+			assertThat(e.getMessage()).contains(msgEsperada);
+		}
+	}
+	
+	@Test
+	public void testeValidarParamsComClienteDtoRequestInsertComDataInvalida() {
+		String msgEsperada = "Erro ao inserir cliente; Obs: (nome e data nascimento (yyyy-MM-dd) são obrigatórios";
+		try {
+			ClienteUtil.validarParams(getClienteDtoRequestInsertComDataInvalida());
+		} catch (ParamsException e) {
+			assertThat(e.getMessage()).contains(msgEsperada);
+		}
+	}
+	
+	@Test
+	public void testeValidarParamsComClienteDtoRequestInsertComData() {
+		try {
+			ClienteUtil.validarParams(getClienteDtoRequestInsertComData());
+		} catch (ParamsException e) {
+			fail("Não Deve lançar uma excecao");
+		}
+	}
+	
+	@Test
+	public void testeobterIdade() {
+		try {
+			int idadeRetorno = ClienteUtil.obterIdade("1991-07-27");
+			assertThat(idadeRetorno).isEqualTo(30);
+		} catch (ParamsException e) {
+			fail("Não Deve lançar uma excecao");
+		}
+	}
+	
 }

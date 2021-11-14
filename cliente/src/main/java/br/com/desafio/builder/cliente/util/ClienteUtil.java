@@ -86,7 +86,7 @@ public class ClienteUtil {
 
 	public static void validarParams(ClienteDtoRequestInsert clienteDtoRequestInsert) throws ParamsException {
 		if (!isValid(clienteDtoRequestInsert)) {
-			log.error(ERROR_PARAMS_CLIENTE_INSERT.getMensagem() + " " + clienteDtoRequestInsert.toString());
+			log.error(ERROR_PARAMS_CLIENTE_INSERT.getMensagem() + " " + clienteDtoRequestInsert);
 			throw new ParamsException(clienteDtoRequestInsert, ERROR_PARAMS_CLIENTE_INSERT.getMensagem());
 		}
 	}

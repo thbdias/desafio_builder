@@ -66,6 +66,30 @@ public class ClienteTesteUtil {
 					getClienteEntityFullMock());
 	}
 	
+	public static ClienteDtoRequest getClienteDtoRequestComIdMock() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setId(7);
+		return clienteDtoRequest;
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestComDataMock() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setDataNascimento("2010-01-10");
+		return clienteDtoRequest;
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestComNomeMock() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setNome("jose");
+		return clienteDtoRequest;
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestComNumeroRegistroMock() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setNumeroRegistro(5);
+		return clienteDtoRequest;
+	}
+	
 	public static ClienteDtoRequest getClienteDtoRequestMock() {
 		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
 		clienteDtoRequest.setId(7);
@@ -81,6 +105,26 @@ public class ClienteTesteUtil {
 
 	public static PageRequest getPageRequestMock() {
 		return PageRequest.of(0, 10);
+	}
+	
+	public static PageRequestDTO getPageRequestDTOMock() {
+		return PageRequestDTO
+				.builder()
+					.page(0)
+					.size(3)
+					.sort("asc")
+					.orderBy("nome")
+				.build();
+	}
+	
+	public static PageRequestDTO getPageRequestDTOComNomeDescMock() {
+		return PageRequestDTO
+				.builder()
+					.page(0)
+					.size(3)
+					.sort("desc")
+					.orderBy("nome")
+				.build();
 	}
 	
 	public static PageRequestDTO getPageRequestDTOErroSortMock() {

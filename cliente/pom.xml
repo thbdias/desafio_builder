@@ -23,7 +23,9 @@
 		<sonar.coverage.jacoco.xmlReportPaths>${basedir}/../target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.language>java</sonar.language>
 		<jacoco-maven-plugin-version>0.8.6</jacoco-maven-plugin-version>		
-		<sonar.coverage.exclusions>			
+		<sonar.coverage.exclusions>		
+			**/dto/*,
+			**/entity/*,	
 			**/*ClienteApplication.java	
 		</sonar.coverage.exclusions>
 	</properties>

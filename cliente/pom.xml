@@ -27,6 +27,7 @@
 			**/dto/*,
 			**/entity/*,	
 			**/controller/*,
+			**/*TestPropertiesExtractor.java,
 			**/*ClienteApplication.java	
 		</sonar.coverage.exclusions>
 	</properties>

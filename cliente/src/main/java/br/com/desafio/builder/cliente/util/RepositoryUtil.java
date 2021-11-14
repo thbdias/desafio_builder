@@ -20,7 +20,7 @@ public class RepositoryUtil {
         int page = (nonNull(pageRequestDTO) && nonNull(pageRequestDTO.getPage())) ? pageRequestDTO.getPage() : 0;
         int size = (nonNull(pageRequestDTO) && nonNull(pageRequestDTO.getSize())) ? pageRequestDTO.getSize() : DEFAULT_SIZE_PAGE_REQUEST;
         
-        if(pageRequestDTO.getSort() != null && pageRequestDTO.getOrderBy() != null) {
+        if(nonNull(pageRequestDTO) && pageRequestDTO.getSort() != null && pageRequestDTO.getOrderBy() != null) {
         	
         	 if(getSortDirection(pageRequestDTO.getSort()).isDescending()) {
         		 return PageRequest.of(page, size, Sort.by(Sort.Order.desc(pageRequestDTO.getOrderBy())));

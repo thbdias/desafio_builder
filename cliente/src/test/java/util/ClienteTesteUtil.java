@@ -3,6 +3,9 @@ package util;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
+
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequestInsert;
 import br.com.desafio.builder.cliente.dto.ClienteDtoResponse;
@@ -70,5 +73,12 @@ public class ClienteTesteUtil {
 		clienteDtoRequest.setNumeroRegistro(3);
 		return clienteDtoRequest;
 	}
+	
+	public static Specification<ClienteEntity> getSpecificationFindAllMock() {
+		return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.isNotNull(root.get("id"));
+	}
 
+	public static PageRequest getPageRequestMock() {
+		return PageRequest.of(0, 10);
+	}
 }

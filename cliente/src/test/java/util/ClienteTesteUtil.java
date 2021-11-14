@@ -1,7 +1,9 @@
 package util;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
+import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequestInsert;
 import br.com.desafio.builder.cliente.dto.ClienteDtoResponse;
 import br.com.desafio.builder.cliente.entity.ClienteEntity;
@@ -53,6 +55,20 @@ public class ClienteTesteUtil {
 					.numeroRegistro(3)
 					.idade(16)
 				.build();
+	}
+	
+	public static Optional<ClienteEntity> getOptionalClienteEntityMock() {
+		return Optional.of(
+					getClienteEntityFullMock());
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestMock() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setId(7);
+		clienteDtoRequest.setNome("abc");
+		clienteDtoRequest.setDataNascimento("2005-02-05");
+		clienteDtoRequest.setNumeroRegistro(3);
+		return clienteDtoRequest;
 	}
 
 }

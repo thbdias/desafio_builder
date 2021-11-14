@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequest;
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequestInsert;
 import br.com.desafio.builder.cliente.dto.ClienteDtoResponse;
+import br.com.desafio.builder.cliente.dto.PageRequestDTO;
 import br.com.desafio.builder.cliente.entity.ClienteEntity;
 
 public class ClienteTesteUtil {
@@ -80,5 +81,67 @@ public class ClienteTesteUtil {
 
 	public static PageRequest getPageRequestMock() {
 		return PageRequest.of(0, 10);
+	}
+	
+	public static PageRequestDTO getPageRequestDTOErroSortMock() {
+		return PageRequestDTO.builder().sort("ascXX").orderBy(null).build();
+	}
+	
+	public static PageRequestDTO getPageRequestDTOErroOrderByMock() {
+		return PageRequestDTO.builder().sort(null).orderBy("campoInexistente").build();
+	}
+	
+	public static PageRequestDTO getPageRequestDTOErroSortIncompativelMock() {
+		return PageRequestDTO.builder().sort("desc").orderBy(null).build();
+	}
+	
+	public static PageRequestDTO getPageRequestDTOErroSortIncompativel2Mock() {
+		return PageRequestDTO.builder().sort(null).orderBy("nome").build();
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestNullMock() {
+		return null;
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestComIdNullMock() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setId(null);
+		return clienteDtoRequest;
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestComIdNegativoMock() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setId(-1);
+		return clienteDtoRequest;
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestComDataInvalida() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setDataNascimento("2010/05-17");
+		return clienteDtoRequest;
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestComDataInvalida2() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setDataNascimento("2010-13-17");
+		return clienteDtoRequest;
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestComDataInvalida3() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setDataNascimento("2010-02-174");
+		return clienteDtoRequest;
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestComDataInvalida4() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setDataNascimento("eeee-02-05");
+		return clienteDtoRequest;
+	}
+	
+	public static ClienteDtoRequest getClienteDtoRequestComDataValida() {
+		ClienteDtoRequest clienteDtoRequest = new ClienteDtoRequest();
+		clienteDtoRequest.setDataNascimento("2010-02-05");
+		return clienteDtoRequest;
 	}
 }

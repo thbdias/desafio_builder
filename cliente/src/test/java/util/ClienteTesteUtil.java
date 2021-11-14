@@ -1,6 +1,7 @@
 package util;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequestInsert;
 import br.com.desafio.builder.cliente.dto.ClienteDtoResponse;
@@ -53,6 +54,11 @@ public class ClienteTesteUtil {
 					.numeroRegistro(3)
 					.idade(16)
 				.build();
+	}
+	
+	public static Optional<ClienteEntity> getOptionalClienteEntityMock() {
+		return Optional.of(
+					getClienteEntityFullMock());
 	}
 
 }

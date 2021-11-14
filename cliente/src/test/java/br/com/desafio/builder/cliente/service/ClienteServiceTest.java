@@ -1,22 +1,29 @@
 package br.com.desafio.builder.cliente.service;
 
+import static br.com.desafio.builder.cliente.util.Message.ADAPTER_CLIENTE_DTO_RESPONSE_FROM_ENTITY;
 import static br.com.desafio.builder.cliente.util.Message.ADAPTER_CLIENTE_ENTITY_FROM_DTO;
+import static br.com.desafio.builder.cliente.util.Message.CLIENTE_INEXISTENTE_PARA_DELETAR;
 import static br.com.desafio.builder.cliente.util.Message.ERROR_INSERIR_CLIENTE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static util.ClienteTesteUtil.getClienteDtoRequestInsertMock;
 import static util.ClienteTesteUtil.getClienteDtoResponseSemMsgMock;
 import static util.ClienteTesteUtil.getClienteEntityFullMock;
 import static util.ClienteTesteUtil.getClienteEntityMock;
+import static util.ClienteTesteUtil.getOptionalClienteEntityMock;
+
+import java.util.Optional;
 
 import javax.persistence.PersistenceException;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import br.com.desafio.builder.cliente.dto.ClienteDtoRequestInsert;
@@ -25,7 +32,6 @@ import br.com.desafio.builder.cliente.entity.ClienteEntity;
 import br.com.desafio.builder.cliente.exception.AdapterException;
 import br.com.desafio.builder.cliente.repository.ClienteRepository;
 import br.com.desafio.builder.cliente.util.ClienteAdapter;
-import br.com.desafio.builder.cliente.util.Message;
 import util.ClienteTesteUtil;
 
 public class ClienteServiceTest {
@@ -100,14 +106,49 @@ public class ClienteServiceTest {
 	}
 	
 	
+	@Test
+	public void testeClientExceptionDeletarCliente()  {
+		
+		when(clienteRepositoryMock.findById(7)).thenReturn(Optional.empty());
+		
+		try {
+			clienteService.deletarCliente(7);
+			fail("Deveria ter lancado uma excecao");
+		} catch (Exception e) {
+			assertThat(e.getMessage()).contains(CLIENTE_INEXISTENTE_PARA_DELETAR.getMensagem());
+		}
+	}
 	
 	
+	@Test
+	public void testeAdapterExceptionDeletarCliente() throws AdapterException  {		
+		ClienteEntity entityFullMock = getClienteEntityFullMock();
+		
+		when(clienteRepositoryMock.findById(7)).thenReturn(getOptionalClienteEntityMock());
+		when(clienteAdapterMock.getClienteDtoResponseFrom(entityFullMock))
+			.thenThrow(new AdapterException(ADAPTER_CLIENTE_DTO_RESPONSE_FROM_ENTITY.getMensagem()));
+		
+		try {
+			clienteService.deletarCliente(7);
+			fail("Deveria ter lancado uma excecao");
+		} catch (Exception e) {
+			assertThat(e.getMessage()).contains(ADAPTER_CLIENTE_DTO_RESPONSE_FROM_ENTITY.getMensagem());
+		}		
+	}
 	
 	
-	
-	
-	
-	
+	@Test
+	public void testeMsgDeletarCliente() throws AdapterException  {		
+		ClienteEntity entityFullMock = getClienteEntityFullMock();		
+		ClienteDtoResponse dtoResponseMock = getClienteDtoResponseSemMsgMock();
+		
+		when(clienteRepositoryMock.findById(7)).thenReturn(getOptionalClienteEntityMock());
+		when(clienteAdapterMock.getClienteDtoResponseFrom(entityFullMock)).thenReturn(dtoResponseMock);
+		
+		ClienteDtoResponse deletarCliente = clienteService.deletarCliente(7);
+		
+		assertThat(deletarCliente.getMsg()).isEqualTo("Cliente deletado com sucesso!");
+	}
 	
 	
 	

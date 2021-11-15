@@ -30,10 +30,54 @@ Execute os dois comando abaixo:
 -> docker-compose up
 ```
 
-> Note: `--capt-add=SYS-ADMIN` is required for PDF rendering.
-
 O projeto estará disponível no endereço abaixo:
 
 ```sh
 http://localhost:8090/clientes
 ```
+
+## Sonar
+
+O projeto utilizou o SonarQube para avaliar parte da qualidade de código via cobertura de testes.
+Para analisar a cobertura do sonar e ver a porcentagem de cobertura pelo próprio sonar siga os passos abaixo:
+- Execute:
+```sh
+docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
+```
+- abra o navegado no endereço:
+```sh
+ http://localhost:9000/
+```
+- login: admin
+- senha: admin
+- cadastre uma nova senha: 123
+- escolha a opção de criar projeto manualmente
+- project display name: cliente
+- project key: cliente
+- escolha analisar o projeto localmente
+- Provide a token -> Generate a token: cliente
+- escolha a análise do projeto pelo build Maven
+- copie o script Scanner gerado. exemplo:
+
+```sh
+ mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=cliente \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.login=f86a33d65a073a2d08dff1034f30dfb55b88c2e0
+```
+
+- vá até a raiz do projeto onde se encontra o arquivo pom.xml e execute esse comando acima
+- Isso dará o resultado da cobetura pelo sonar.
+
+
+
+
+
+
+
+
+
+
+
+
+

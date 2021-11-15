@@ -39,7 +39,12 @@ http://localhost:8090/clientes
 ## Sonar
 
 O projeto utilizou o SonarQube para avaliar parte da qualidade de código via cobertura de testes.
-Para analisar a cobertura do sonar e ver a porcentagem de cobertura pelo próprio sonar siga os passos abaixo:
+Abaixo está um print da análise do sonar para este projeto:
+
+![system schema](analise_sonar.PNG)
+
+É possível reproduzir o resultado acima localmente utilizando o docker.
+Para isso siga os passos abaixo:
 - Execute:
 ```sh
 docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
@@ -68,16 +73,3 @@ docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000
 
 - vá até a raiz do projeto onde se encontra o arquivo pom.xml e execute esse comando acima
 - Isso dará o resultado da cobetura pelo sonar.
-
-
-
-
-
-
-
-
-
-
-
-
-

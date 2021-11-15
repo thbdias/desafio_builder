@@ -71,5 +71,5 @@ docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000
   -Dsonar.login=f86a33d65a073a2d08dff1034f30dfb55b88c2e0
 ```
 
-- vá até a raiz do projeto onde se encontra o arquivo pom.xml e execute esse comando acima
+- vá até a raiz do projeto onde se encontra o arquivo pom.xml e execute o comando acima
 - Isso dará o resultado da cobetura pelo sonar.

@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  postgres_db:
+    image: postgres
+    restart: always
+    container_name: postgres    
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234567
+      POSTGRES_DB: db_builder    
+    ports:
+      - "15432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data 
+    
+    
+  api_service:
+    build: .
+    restart: always
+    container_name: cliente   
+    ports:
+      - 8090:8090    
+    depends_on:
+      - postgres_db
+    links:
+      - postgres_db:database      
+    
+
+    
